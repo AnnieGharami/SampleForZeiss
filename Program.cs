@@ -18,60 +18,16 @@ namespace Platform.ApplicationServices
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
-            using (var ctx = new EmployeeDbContext())
-            {
-                //var stud = new Student() { StudentName = "Bill" };
-                var emp = new Employee()
-                {
-                    Id = 1,
-                    FirstName = "John",
-                    LastName = "Doe",
-                    RoleId = 1,
-                    DepartmentId = 1,
-                    CreatedAt = DateTime.Now
-                };
-                ctx.Employees.Add(emp);
-                _ = new Employee()
-                {
-                    Id = 2,
-                    FirstName = "Jane",
-                    LastName = "Simmers",
-                    RoleId = 1,
-                    DepartmentId = 2,
-                    CreatedAt = DateTime.Now
-                };
-                ctx.Employees.Add(emp);
-                emp =new Employee()
-                  {
-                      Id = 3,
-                      FirstName = "Anthony",
-                      LastName = "Dewar",
-                      RoleId = 2,
-                      DepartmentId = 1,
-                      CreatedAt = DateTime.Now
-                  };
-
-                ctx.Employees.Add(emp);
-                ctx.SaveChanges();
-            }
-            //using (var scope = host.Services.CreateScope())
-            //{
-            //    try
-            //    {
-            //        var context = scope.ServiceProvider.GetService<EmployeeDbContext>();
-            //        context.Database.EnsureDeleted();
-            //        context.Database.Migrate();
-            //    }
-            //    catch (Exception)
-            //    {
-            //        throw;
-            //    }
-            //}
-            //host.Run();
         }
+
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+             .ConfigureLogging(logging =>
+             {
+                 logging.ClearProviders();
+                 logging.AddConsole();
+             })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

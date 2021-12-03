@@ -50,7 +50,7 @@ namespace Platform.ApplicationServices
             // configure jwt authentication
             var token = Configuration.GetSection("tokenManagement").Get<TokenManagement>();
             var secret = Encoding.ASCII.GetBytes(token.Secret);
-          
+
 
             services.AddAuthentication(x =>
             {
@@ -100,19 +100,6 @@ namespace Platform.ApplicationServices
             {
                 app.UseDeveloperExceptionPage();
             }
-            ///Add User session
-            app.UseSession();
-
-            //Add JWToken to all incoming HTTP Request Header
-            app.Use(async (context, next) =>
-            {
-                var JWToken = context.Session.GetString("JWToken");
-                if (!string.IsNullOrEmpty(JWToken))
-                {
-                    context.Request.Headers.Add("Authorization", "Bearer " + JWToken);
-                }
-                await next();
-            });
             ///Add authentication
             app.UseAuthentication();
             app.UseHttpsRedirection();

@@ -30,8 +30,7 @@ namespace Platform.ApplicationServices.Controllers
             string token;
             if (_authService.IsAuthenticated(user, out token))
             {
-                //Session set for internal requests.
-                HttpContext.Session.SetString("JWToken", token);
+
                 return Ok(token);
             }
             return BadRequest("Invalid Request");
